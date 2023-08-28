@@ -1,9 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
+	"fmt"
+	"github.com/pelletier/go-toml"
 	"go-pinterest/config"
-	"time"
+	"go-pinterest/db"
+	"io/ioutil"
 )
 
 var (
@@ -20,11 +24,24 @@ const (
 )
 
 func main() {
-	statDate, err := time.Parse(layout1, "2023-11-22")
+	flag.Parse()
+	configBytes, err := ioutil.ReadFile(*conf)
 	if err != nil {
-		println(err.Error())
+		fmt.Println("err when read config file ", err, "file ", *conf)
 	}
-	println(statDate.String())
+	err = toml.Unmarshal(configBytes, &c)
+	if err != nil {
+		fmt.Println("err when pass toml file ", err)
+	}
+	text, err := json.Marshal(c)
+	fmt.Println("Success read config from toml file ", string(text))
+	err = db.Init(c)
+	if err != nil {
+		fmt.Println("err when connect postgres", err.Error())
+	}
+	defer db.Close()
+	
+
 	//flag.Parse()
 	//configBytes, err := ioutil.ReadFile(*conf)
 	//if err != nil {

@@ -265,7 +265,7 @@ func GetListVideoMatchResultByAudioAndScore(c *gin.Context) {
 		offset = 0
 	}
 
-	matchs, err := db.GetTopVideoMatchResultByAudioIdAndLimitScore(audioId, lowerScore, sortType, offset)
+	matchs, err := db.GetTopVideoMatchResultByAudioIdAndLimitScore(audioId, "",lowerScore, sortType, offset)
 	if err != nil {
 		println("error when get list new video ", err.Error())
 	}
