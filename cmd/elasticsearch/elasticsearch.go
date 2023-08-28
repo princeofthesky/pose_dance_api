@@ -57,7 +57,7 @@ func indexData(es *elasticsearch.Client)  {
 	}
 }
 func main() {
-	db.Init()
+	db.InitMysql()
 	log.SetFlags(0)
 	// Initialize a client with the default settings.
 	//
