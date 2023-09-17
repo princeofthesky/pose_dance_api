@@ -98,7 +98,7 @@ func InitListAudio() {
 }
 
 func GetListAudios(c *gin.Context) {
-	var allSongs []model.SongBasicInfo
+	allSongs := []model.SongBasicInfo{}
 	pageText, exit := c.GetQuery("page")
 	if !exit {
 		pageText = "0"
