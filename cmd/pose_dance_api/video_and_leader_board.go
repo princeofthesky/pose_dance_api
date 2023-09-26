@@ -403,6 +403,9 @@ func GetMatchResultByAudio(c *gin.Context) {
 			limitTime, _ = strconv.ParseInt(splitText[1], 10, 64)
 		}
 	}
+	if len(playMode) == 0 {
+		playMode = "dance"
+	}
 	length, err := strconv.Atoi(lengthText)
 	if err != nil {
 		length = 20
@@ -412,9 +415,9 @@ func GetMatchResultByAudio(c *gin.Context) {
 	}
 	var scoreInfos []db.MatchResult
 	if queryType == "video" {
-		scoreInfos, err = db.GetTopVideoMatchResultByAudioId(audioId,playMode, limitScore, limitTime, length)
+		scoreInfos, err = db.GetTopVideoMatchResultByAudioId(audioId, playMode, limitScore, limitTime, length)
 	} else {
-		scoreInfos, err = db.GetTopMatchResultByAudioId(audioId,playMode, limitScore, limitTime, length)
+		scoreInfos, err = db.GetTopMatchResultByAudioId(audioId, playMode, limitScore, limitTime, length)
 	}
 	println("scoreInfos", len(scoreInfos))
 	if err != nil {
